@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUP_QUERY } from "@/sanity/lib/queries";
 import React from "react";
 
 const Page = async ({
@@ -7,19 +9,7 @@ const Page = async ({
 }: {
   searchParams: Promise<{ query?: string }>;
 }) => {
-
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: 'Nana' },
-      description: "This is a description",
-      image:
-        "https://www.rolandberger.com/img/Tiles/Tile-Content/Roland_Berger-24_2195_Humanoid_robots-ST.jpg",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
+const posts = await client.fetch(STARTUP_QUERY)
 
   const query = (await searchParams).query;
   return (
@@ -41,11 +31,11 @@ const Page = async ({
 
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: StartupCardType) =>(
-              <StartupCard key={post?._id} post={post}/>
+            posts.map((post: StartupTypeCard) => (
+              <StartupCard key={post?._id} post={post} />
             ))
-          ):(
-            <p className="no-result">No startups found</p>
+          ) : (
+            <p className="no-results">No startups found</p>
           )}
         </ul>
       </section>
