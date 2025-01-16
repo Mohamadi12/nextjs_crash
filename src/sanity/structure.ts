@@ -7,4 +7,5 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem("author").title("Authors"), //C'est le preview qui est ici en quelque sorte le title et le name au debut
       S.documentTypeListItem("startup").title("Startups"),
+      // S.documentTypeListItem("playlist").title("Playlists"),
     ]);
